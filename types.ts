@@ -7,4 +7,4 @@ export interface WordPair {
 }
 
 export type LearningMode = 'selection' | 'words' | 'verbs' | 'suffixes';
-export type Suffix = 'kor' | 'pen' | null;
+export type Suffix = 'kor' | 'pen' | 'garri' | 'keta' | 'ezin' | 'keria' | 'men' | 'aldi' | 'tegi' | 'buru' | null;

@@ -15,9 +15,11 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return newArray;
 };
 
-const filterBySuffix = (words: WordPair[], suffixToFilter: 'kor' | 'pen'): WordPair[] => {
+const filterBySuffix = (words: WordPair[], suffixToFilter: Suffix): WordPair[] => {
+  if (!suffixToFilter) return [];
   return words.filter(wordPair => {
     const basqueWordPart = wordPair.basque.split(',')[0].trim();
+    // Ensure the word part is long enough and does not start with a hyphen (typical for decorators)
     if (basqueWordPart.length >= suffixToFilter.length && !basqueWordPart.startsWith('-')) {
       return basqueWordPart.toLowerCase().endsWith(suffixToFilter.toLowerCase());
     }
@@ -56,7 +58,8 @@ const App: React.FC = () => {
     setCurrentDeck([]); // Clear deck for suffix selection screen
   }, []);
 
-  const handleSuffixSelect = useCallback((suffix: 'kor' | 'pen') => {
+  const handleSuffixSelect = useCallback((suffix: Suffix) => {
+    if (!suffix) return;
     const filteredData = filterBySuffix(euskaraWords, suffix);
     initializeDeck(filteredData);
     setActiveSuffix(suffix);
@@ -136,6 +139,19 @@ const App: React.FC = () => {
   }
 
   if (learningMode === 'suffixes' && !activeSuffix) {
+    const suffixButtons: { suffix: Suffix, label: string, color: string, textColor?: string }[] = [
+      { suffix: 'kor', label: '-kor', color: 'bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-400', textColor: 'text-slate-900' },
+      { suffix: 'pen', label: '-pen', color: 'bg-lime-500 hover:bg-lime-600 focus:ring-lime-400', textColor: 'text-slate-900' },
+      { suffix: 'garri', label: '-garri', color: 'bg-sky-500 hover:bg-sky-600 focus:ring-sky-400', textColor: 'text-white' },
+      { suffix: 'keta', label: '-keta', color: 'bg-emerald-500 hover:bg-emerald-600 focus:ring-emerald-400', textColor: 'text-white' },
+      { suffix: 'ezin', label: '-ezin', color: 'bg-rose-500 hover:bg-rose-600 focus:ring-rose-400', textColor: 'text-white' },
+      { suffix: 'keria', label: '-keria', color: 'bg-amber-500 hover:bg-amber-600 focus:ring-amber-400', textColor: 'text-slate-900' },
+      { suffix: 'men', label: '-men', color: 'bg-teal-500 hover:bg-teal-600 focus:ring-teal-400', textColor: 'text-white' },
+      { suffix: 'aldi', label: '-aldi', color: 'bg-cyan-500 hover:bg-cyan-600 focus:ring-cyan-400', textColor: 'text-white' },
+      { suffix: 'tegi', label: '-tegi', color: 'bg-fuchsia-500 hover:bg-fuchsia-600 focus:ring-fuchsia-400', textColor: 'text-white' },
+      { suffix: 'buru', label: '-buru', color: 'bg-violet-500 hover:bg-violet-600 focus:ring-violet-400', textColor: 'text-white' },
+    ];
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-800 to-slate-600 flex flex-col items-center justify-center p-4 text-white" role="main">
         <header className="mb-12 text-center">
@@ -144,21 +160,17 @@ const App: React.FC = () => {
             </h1>
             <p className="text-lg text-indigo-100 mt-3">Aukeratu atzizkia</p>
         </header>
-        <div className="space-y-6 md:space-y-0 md:space-x-8 flex flex-col md:flex-row mb-8">
-          <button
-            onClick={() => handleSuffixSelect('kor')}
-            className="py-4 px-8 bg-yellow-500 text-slate-900 font-semibold rounded-lg shadow-xl hover:bg-yellow-600 transition-all duration-200 ease-in-out transform hover:scale-105 text-xl focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75"
-            aria-label="'kor' atzizkia hautatu"
-          >
-            "-kor"
-          </button>
-          <button
-            onClick={() => handleSuffixSelect('pen')}
-            className="py-4 px-8 bg-lime-500 text-slate-900 font-semibold rounded-lg shadow-xl hover:bg-lime-600 transition-all duration-200 ease-in-out transform hover:scale-105 text-xl focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-opacity-75"
-            aria-label="'pen' atzizkia hautatu"
-          >
-            "-pen"
-          </button>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-8">
+          {suffixButtons.map(btn => (
+            <button
+              key={btn.suffix}
+              onClick={() => handleSuffixSelect(btn.suffix)}
+              className={`py-3 px-6 ${btn.color} ${btn.textColor || 'text-white'} font-semibold rounded-lg shadow-xl transition-all duration-200 ease-in-out transform hover:scale-105 text-lg focus:outline-none focus:ring-2 focus:ring-opacity-75`}
+              aria-label={`'${btn.label}' atzizkia hautatu`}
+            >
+              {btn.label}
+            </button>
+          ))}
         </div>
         <button
             onClick={handleBackToMainSelection}
@@ -174,7 +186,7 @@ const App: React.FC = () => {
     );
   }
   
-  if (currentDeck.length === 0) { // Changed condition here
+  if (currentDeck.length === 0) { 
      let emptyMessage = "Sorta kargatzen...";
      let backButtonText = "Modu Hautaketara Itzuli";
      let backButtonAction = handleBackToMainSelection;
@@ -184,8 +196,6 @@ const App: React.FC = () => {
       backButtonText = "Atzizki Hautaketara Itzuli";
       backButtonAction = handleBackToSuffixSelection;
     } else if (learningMode === 'words' || learningMode === 'verbs') {
-        // This case might not be hit if initial decks always have words,
-        // but good for robustness.
         emptyMessage = "Ez da hitzik aurkitu sorta honetan.";
     }
 
@@ -223,11 +233,11 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col items-center justify-center p-4 sm:p-6 md:p-8" role="application">
       <header className="mb-8 text-center w-full max-w-3xl relative">
          <button
-            onClick={handleBackToMainSelection}
+            onClick={learningMode === 'suffixes' && activeSuffix ? handleBackToSuffixSelection : handleBackToMainSelection}
             className="absolute top-0 left-0 -mt-2 ml-0 sm:ml-2 py-2 px-4 bg-black bg-opacity-20 text-indigo-100 hover:bg-opacity-30 font-semibold rounded-lg shadow-md transition-all duration-150 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-opacity-75"
-            aria-label="Modu nagusira itzuli"
+            aria-label={learningMode === 'suffixes' && activeSuffix ? "Atzizki Hautaketara Itzuli" : "Modu Nagusira Itzuli"}
           >
-            &larr; Modu Nagusira Itzuli
+            &larr; {learningMode === 'suffixes' && activeSuffix ? "Atzizki Hautaketara Itzuli" : "Modu Nagusira Itzuli"}
         </button>
         <h1 className="text-4xl sm:text-5xl font-extrabold text-white shadow-lg rounded-xl p-4 bg-black bg-opacity-20">
           Euskara Ikasteko Txartelak: {modeTitle}
@@ -239,12 +249,11 @@ const App: React.FC = () => {
         {currentWordPair ? (
           <Flashcard wordPair={currentWordPair} showAnswer={showAnswer} />
         ) : (
-           // This should ideally be caught by the empty deck check above, but as a fallback:
           <div className="bg-white shadow-2xl rounded-xl p-6 md:p-10 w-full max-w-lg min-h-[300px] flex flex-col items-center justify-center">
             <p className="text-xl text-slate-700">Sorta amaitu da. Bikain!</p>
           </div>
         )}
-        {currentDeck.length > 0 && ( // Only show controls if there's a deck
+        {currentDeck.length > 0 && ( 
             <Controls
               onPrevious={handlePrevious}
               onNext={handleNext}
