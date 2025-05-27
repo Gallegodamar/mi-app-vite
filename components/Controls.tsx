@@ -1,11 +1,8 @@
-
 import React from 'react';
 
 interface ControlsProps {
   onPrevious: () => void;
   onNext: () => void;
-  onToggleAnswer: () => void;
-  isAnswerShown: boolean;
   canPrevious: boolean;
   canNext: boolean;
   currentCardNumber: number;
@@ -15,8 +12,6 @@ interface ControlsProps {
 const Controls: React.FC<ControlsProps> = ({
   onPrevious,
   onNext,
-  onToggleAnswer,
-  isAnswerShown,
   canPrevious,
   canNext,
   currentCardNumber,
@@ -29,24 +24,20 @@ const Controls: React.FC<ControlsProps> = ({
           onClick={onPrevious}
           disabled={!canPrevious}
           className="py-3 px-6 bg-slate-300 text-slate-800 font-semibold rounded-lg shadow-md hover:bg-slate-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-opacity-75"
+          aria-label="Aurreko txartela"
         >
           Aurrekoa
-        </button>
-        <button
-          onClick={onToggleAnswer}
-          className="py-3 px-6 bg-amber-500 text-white font-semibold rounded-lg shadow-md hover:bg-amber-600 transition-colors duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-opacity-75"
-        >
-          {isAnswerShown ? 'Erantzuna Ezkutatu' : 'Erantzuna Erakutsi'}
         </button>
         <button
           onClick={onNext}
           disabled={!canNext}
           className="py-3 px-6 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-75"
+          aria-label="Hurrengo txartela"
         >
           Hurrengoa
         </button>
       </div>
-      <p className="text-slate-600 text-sm">
+      <p className="text-slate-600 text-sm" aria-live="polite">
         Txartela: {currentCardNumber} / {totalCards}
       </p>
     </div>
