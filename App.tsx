@@ -34,346 +34,265 @@ Alde horretatik, -tasun atzizkiaren aurkaria litzateke.
 Adibideak:
 * erosotasun (comodidad) / *erosokeria* (dejadez)
 * harrotasuna (orgullo) / *harrokeria* (fanfarronería)
-* itsutasuna (ceguera) / *itsukeria* (obcecación, obstinación)
-(Ikus beherago –tasun atzizkia).
-
-Oharra:
-Amaierako A berezkoa da; beraz, ezin da inoiz kendu: astakeri bat (*astakeria* bat), ez esan txorakeririk (*txorakeriarik*).`;
-
-const KETA_EXPLANATION = `Erabilera:
-
-* Atzizki hau oso emankorra da, eta «**ekintza**» edo «**jarduera**» adierazten du (ikus beherako –kuntza atzizkia).
-* Iparraldean «**multzoa**» adierazteko erabiltzen dute. Adibidez: *ardoketa* (ardo-uzta, ardo bila), *belarketa* (belar-uzta, belar bila), *ogiketa* (gari-multzoa, ogi bila), *egurketa* (egur-pila, egur bila)...
-* Aditzekin erabiltzen da (aditza + –keta). Adibidez: aldatu > *aldaketa*, banatu > *banaketa*, hitz egin > *hizketa*, zuzendu > *zuzenketa*...
-* Hitz banaka batzuetan, -eta egiten dute: errieta, gogoeta, hileta (> hilketa), lapurreta (lapurketa).
-* Azken urteotan, neurriz gain erabili izan da: agerketa, baloraketa, ebaluaketa, erabilketa, errepikaketa, fotokonposaketa, eta abar.
-* Alde horretatik, bi gomendio emango ditugu:
-* Maileguetan, -zio atzizkia mantendu: digestio, ebaluazio, konposizio...
-* NOR (da) motako aditzekin, jardueraren gauzatzea adierazteko, hobe -era edo -tze erabiltzea. Adibidez: bihotzaren gelditze edo geldiera (??geldiketa), itsasontziaren hondoratzea (??hondoraketa), proiektuaren sorrera (??sorketa)...`;
+* itsutasuna (ceguera) / *itsukeria* (obcecación)
+* zikinkeria (suciedad, porquería)
+* alferkeria (pereza, holgazanería)`;
 
 
-const SUFFIX_DETAILS_LIST: Array<{ suffix: Exclude<Suffix, null>; label: string; color: string; textColor?: string; explanation: string;}> = [
-  { suffix: 'kor', label: '-kor', color: 'bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-400', textColor: 'text-slate-900', explanation: "Azalpen hau laster egongo da eskuragarri." },
-  { suffix: 'pen', label: '-pen', color: 'bg-lime-500 hover:bg-lime-600 focus:ring-lime-400', textColor: 'text-slate-900', explanation: "Azalpen hau laster egongo da eskuragarri." },
-  { suffix: 'garri', label: '-garri', color: 'bg-sky-500 hover:bg-sky-600 focus:ring-sky-400', textColor: 'text-white', explanation: "Azalpen hau laster egongo da eskuragarri." },
-  { suffix: 'keta', label: '-keta', color: 'bg-emerald-500 hover:bg-emerald-600 focus:ring-emerald-400', textColor: 'text-white', explanation: KETA_EXPLANATION },
-  { suffix: 'ezin', label: '-ezin', color: 'bg-rose-500 hover:bg-rose-600 focus:ring-rose-400', textColor: 'text-white', explanation: "Azalpen hau laster egongo da eskuragarri." },
-  { suffix: 'keria', label: '-keria', color: 'bg-amber-500 hover:bg-amber-600 focus:ring-amber-400', textColor: 'text-slate-900', explanation: KERIA_EXPLANATION },
-  { suffix: 'men', label: '-men', color: 'bg-teal-500 hover:bg-teal-600 focus:ring-teal-400', textColor: 'text-white', explanation: "Azalpen hau laster egongo da eskuragarri." },
-  { suffix: 'aldi', label: '-aldi', color: 'bg-cyan-500 hover:bg-cyan-600 focus:ring-cyan-400', textColor: 'text-white', explanation: "Azalpen hau laster egongo da eskuragarri." },
-  { suffix: 'tegi', label: '-tegi', color: 'bg-fuchsia-500 hover:bg-fuchsia-600 focus:ring-fuchsia-400', textColor: 'text-white', explanation: "Azalpen hau laster egongo da eskuragarri." },
-  { suffix: 'buru', label: '-buru', color: 'bg-violet-500 hover:bg-violet-600 focus:ring-violet-400', textColor: 'text-white', explanation: "Azalpen hau laster egongo da eskuragarri." },
+interface SuffixDetail {
+  value: Suffix;
+  name: string;
+  explanation: string;
+  exampleWord?: string;
+  exampleSentence?: string;
+}
+
+const SUFFIX_DETAILS_LIST: SuffixDetail[] = [
+  { value: 'kor', name: '-kor', explanation: 'Joera edo zaletasuna adierazten du. Nolakotasuna adierazten duten izenondoak sortzeko erabiltzen da.\n\nAdibideak:\n* beldur*kor* (beldurtia)\n* gizalege*kor* (gizalegezkoa)\n* lagun*kor* (lagunkoia)\n* umore*kor* (umoretsua)', exampleWord: 'lagunkor', exampleSentence: 'Oso pertsona lagunkorra da.' },
+  { value: 'pen', name: '-pen', explanation: 'Ekintza edo sentimendu baten ondorioa edo emaitza adierazten du. Aditzoinari gehitzen zaio izen abstraktuak sortzeko.\n\nAdibideak:\n* itxaro*pen* (itxarotearen ondorioa)\n* ikus*pen* (ikustearen ondorioa)\n* senti*pen* (sentitzearen ondorioa)\n* oroi*pen* (oroitzearen ondorioa)\n* gara*pen* (garatzearen ondorioa)', exampleWord: 'itxaropen', exampleSentence: 'Itxaropena da galtzen den azken gauza.' },
+  { value: 'garri', name: '-garri', explanation: 'Zerbait eragiten edo sortzen duena, edo zerbaitetarako egokia dena adierazten du.\n\nAdibideak:\n* erabil*garri* (erabil daitekeena)\n* ikus*garri* (ikus daitekeena, ikustekoa)\n* ezin sinetsiz*garri* (sinestezina)\n* onar*garri* (onartzeko modukoa)', exampleWord: 'erabilgarri', exampleSentence: 'Tresna hau oso erabilgarria da.' },
+  { value: 'keta', name: '-keta', explanation: 'Ekintza edo prozesu bat adierazten du, askotan modu intentsiboan edo errepikakorrean.\n\nAdibideak:\n* berri*keta* (berriketan aritzea)\n* azter*keta* (aztertzea)\n* hausnar*keta* (hausnartzea)\n* lehia*keta* (lehian aritzea)', exampleWord: 'azterketa', exampleSentence: 'Bihar azterketa garrantzitsu bat daukat.' },
+  { value: 'ezin', name: '-ezin', explanation: 'Ezintasuna edo zerbait egiteko ezintasuna adierazten du. Askotan aditz-izenarekin batera erabiltzen da.\n\nAdibideak:\n* *ezin* etorri (etortzeko ezintasuna)\n* *ezin* egin (egiteko ezintasuna)\n* *ezin* sinetsi (sinesteko ezintasuna)\n* *ezin* ikusi (ikusteko ezintasuna)', exampleWord: 'ezin etorri', exampleSentence: 'Ezin etorri naiz bilerara.' },
+  { value: 'keria', name: '-keria', explanation: KERIA_EXPLANATION, exampleWord: 'txatxarkeria', exampleSentence: 'Hori txatxarkeria hutsa da.' },
+  { value: 'men', name: '-men', explanation: 'Ekintza baten ondorioa, emaitza edo horrekin lotutako kontzeptu abstraktua adierazten du.\n\nAdibideak:\n* agindu*men* (agintzeko ahalmena)\n* ezagu*men* (ezagutzeko gaitasuna)\n* uler*men* (ulertzeko gaitasuna)\n* eska*men* (eskatzea)', exampleWord: 'ulermen', exampleSentence: 'Testuaren ulermena zaila izan da.' },
+  { value: 'aldi', name: '-aldi', explanation: 'Denbora-tartea edo gertaera bat adierazten du.\n\nAdibideak:\n* denbor*aldi* (denbora tartea)\n* gazt*aldi* (gaztaroa)\n* ekaitz*aldi* (ekaitz garaia)\n* goiz*aldi* (goizeko tartea)', exampleWord: 'denboraldi', exampleSentence: 'Denboraldi berria hasi da.' },
+  { value: 'tegi', name: '-tegi', explanation: 'Lekua edo zerbait gordetzeko tokia adierazten du.\n\nAdibideak:\n* liburu*tegi* (liburuak gordetzeko tokia)\n* lan*tegi* (lan egiteko tokia)\n* abel*tegi* (abelgorriak gordetzeko tokia)\n* har*tegi* (harria ateratzeko tokia)', exampleWord: 'liburutegi', exampleSentence: 'Liburutegira joan naiz ikastera.' },
+  { value: 'buru', name: '-buru', explanation: 'Joera, zaletasuna edo kualitate bat adierazten du, askotan pertsona bati lotuta.\n\nAdibideak:\n* lotsa*buru* (lotsatia)\n* harro*buru* (harroa)\n* lan*buru* (langilea)\n* buruargi (listo)', exampleWord: 'lotsaburu', exampleSentence: 'Oso lotsaburua da eta ez du hitz egiten.' },
+  { value: 'erraz', name: '-erraz', explanation: 'Modua edo erraztasuna adierazten du. \'Erraz\' hitzarekin lotuta dago.\n\nAdibideak:\n* uler*erraz* (ulertzeko erraza)\n* eusk*erraz* (euskaraz erraz egiten duena)\n* jan*erraz* (jateko erraza)', exampleWord: 'ulererraz', exampleSentence: 'Liburu hau ulererraza da.' },
+  { value: 'kuntza', name: '-kuntza', explanation: 'Ekintza, prozesua edo jarduera baten emaitza edo multzoa adierazten du. Izen abstraktuak sortzen ditu.\n\nAdibideak:\n* hez*kuntza* (heztearen ekintza)\n* sor*kuntza* (sortzearen ekintza)\n* iker*kuntza* (ikertzearen ekintza)', exampleWord: 'hezkuntza', exampleSentence: 'Hezkuntza funtsezkoa da gizartearentzat.' },
+  { value: 'kizun', name: '-kizun', explanation: 'Egin behar den zerbait edo etorkizuneko ekintza bat adierazten du.\n\nAdibideak:\n* egin*kizun* (egitekoa)\n* ikus*kizun* (ikuskizuna)\n* galde*kizun* (galdera)', exampleWord: 'eginkizun', exampleSentence: 'Hainbat eginkizun ditut gaurko.' },
+  { value: 'kide', name: '-kide', explanation: 'Parte-hartzea, kidetasuna edo talde berekoa izatea adierazten du.\n\nAdibideak:\n* lan*kide* (laneko laguna)\n* bidai*kide* (bidaia laguna)\n* ikas*kide* (ikasketetako laguna)', exampleWord: 'lankide', exampleSentence: 'Nire lankideak oso jatorrak dira.' },
+  { value: 'bera', name: '-bera', explanation: 'Joera edo sentikortasuna adierazten du. \'Bera\' hitzak \'sentibera\' esan nahi du batzuetan.\n\nAdibideak:\n* lotsa*bera* (lotsatia)\n* min*bera* (erraz min hartzen duena)\n* maite*bera* (erraz maitemintzen dena)', exampleWord: 'lotsabera', exampleSentence: 'Oso lotsabera da jende aurrean.' },
+  { value: 'aro', name: '-aro', explanation: 'Denbora-tarte, garai edo aro bat adierazten du.\n\nAdibideak:\n* haurtz*aro* (haurra izateko garaia)\n* gazt*aro* (gaztea izateko garaia)\n* ud*aro* (uda garaia)', exampleWord: 'haurtzaro', exampleSentence: 'Haurtzaro polita izan nuen.' },
+  { value: 'kada', name: '-kada', explanation: 'Kolpea, ekintza edo kopuru bat adieraz dezake.\n\nAdibideak:\n* osti*kada* (ostiko baten kolpea)\n* besark*ada* (besarkada)\n* mil*aka* (milako kopurua)', exampleWord: 'ostikada', exampleSentence: 'Ostikada bat eman zion baloiari.' },
+  { value: 'mendu', name: '-mendu', explanation: 'Ekintza baten emaitza, egoera edo prozesua adierazten du. Izen abstraktuak sortzeko erabiltzen da.\n\nAdibideak:\n* gara*mendu* (garatzea)\n* alda*mendu* (aldatzea)\n* senti*mendu* (sentitzea)', exampleWord: 'sentimendu', exampleSentence: 'Sentimendu sakonak adierazi zituen.' },
+  { value: 'gune', name: '-gune', explanation: 'Lekua, tokia edo eremu bat adierazten du.\n\nAdibideak:\n* lan*gune* (lan egiteko tokia)\n* atseden*gune* (atseden hartzeko tokia)\n* bil*gune* (biltzeko tokia)', exampleWord: 'atsedengune', exampleSentence: 'Autobidean atsedengune bat dago.' },
+  { value: 'tasun', name: '-tasun', explanation: 'Nolakotasuna, egoera edo kualitatea adierazten du. Izen abstraktuak sortzen ditu.\n\nAdibideak:\n* eder*tasun* (ederra izatea)\n* zorion*tasun* (zoriontsu izatea)\n* anai*tasun* (anaiarteko harremana)', exampleWord: 'edertasun', exampleSentence: 'Naturaren edertasunak liluratzen nau.' },
 ];
 
 
 const App: React.FC = () => {
   const [learningMode, setLearningMode] = useState<LearningMode>('selection');
-  const [activeSuffix, setActiveSuffix] = useState<Suffix>(null);
-  const [currentDeck, setCurrentDeck] = useState<WordPair[]>([]);
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [showAnswer, setShowAnswer] = useState<boolean>(false);
-  const [isExplanationModalOpen, setIsExplanationModalOpen] = useState<boolean>(false);
-  const [explanationModalContent, setExplanationModalContent] = useState<{ title: string, text: string } | null>(null);
-  const [activeSuffixDetails, setActiveSuffixDetails] = useState<{ label: string, explanation: string } | null>(null);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [shuffledWords, setShuffledWords] = useState<WordPair[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: '', explanation: '' });
+  const [selectedSuffix, setSelectedSuffix] = useState<Suffix>(null);
 
 
-  const initializeDeck = useCallback((deckData: WordPair[]) => {
-    setCurrentDeck(shuffleArray(deckData));
-    setCurrentIndex(0);
-    setShowAnswer(false);
-  }, []);
+  const currentWordList = useMemo(() => {
+    if (learningMode === 'words') return euskaraWords;
+    if (learningMode === 'verbs') return euskaraVerbs;
+    if (learningMode === 'suffixes' && selectedSuffix) {
+      const allWords = [...euskaraWords, ...euskaraVerbs];
+      const uniqueWords = Array.from(new Map(allWords.map(item => [item.basque, item])).values());
+      return filterBySuffix(uniqueWords, selectedSuffix);
+    }
+    return [];
+  }, [learningMode, selectedSuffix]);
 
-  const handleWordModeSelect = useCallback(() => {
-    initializeDeck(euskaraWords);
-    setLearningMode('words');
-    setActiveSuffix(null);
-    setActiveSuffixDetails(null);
-  }, [initializeDeck]);
-
-  const handleVerbModeSelect = useCallback(() => {
-    initializeDeck(euskaraVerbs);
-    setLearningMode('verbs');
-    setActiveSuffix(null);
-    setActiveSuffixDetails(null);
-  }, [initializeDeck]);
-
-  const handleSuffixCategorySelect = useCallback(() => {
-    setLearningMode('suffixes');
-    setActiveSuffix(null);
-    setActiveSuffixDetails(null);
-    setCurrentDeck([]);
-  }, []);
-
- const handleSuffixSelect = useCallback((suffix: Suffix) => {
-    if (!suffix) return;
-    const filteredData = filterBySuffix(euskaraWords, suffix);
-    initializeDeck(filteredData);
-    setActiveSuffix(suffix);
-    
-    const details = SUFFIX_DETAILS_LIST.find(s => s.suffix === suffix);
-    if (details) {
-      setActiveSuffixDetails({ label: details.label, explanation: details.explanation });
+  const initializeCards = useCallback(() => {
+    if (currentWordList.length > 0) {
+      setShuffledWords(shuffleArray(currentWordList));
+      setCurrentCardIndex(0);
+      setShowAnswer(false);
     } else {
-      setActiveSuffixDetails(null); 
+      setShuffledWords([]); 
+      setCurrentCardIndex(0);
     }
-    setLearningMode('suffixes'); 
-  }, [initializeDeck]);
+  }, [currentWordList]);
 
-
-  const handleBackToMainSelection = useCallback(() => {
-    setLearningMode('selection');
-    setActiveSuffix(null);
-    setActiveSuffixDetails(null);
-    setCurrentDeck([]);
-  }, []);
-
-  const handleBackToSuffixSelection = useCallback(() => {
-    setActiveSuffix(null);
-    setActiveSuffixDetails(null);
-    setCurrentDeck([]);
-    setLearningMode('suffixes'); 
-  }, []);
-
-
-  const handleNext = useCallback(() => {
-    if (currentIndex < currentDeck.length - 1) {
-      setShowAnswer(false); 
-      setCurrentIndex(prevIndex => prevIndex + 1);
+  React.useEffect(() => {
+    if (learningMode === 'suffixes' && !selectedSuffix) {
+        setShuffledWords([]);
+        setCurrentCardIndex(0);
+    } else {
+        initializeCards();
     }
-  }, [currentIndex, currentDeck.length]);
+  }, [learningMode, selectedSuffix, initializeCards]);
 
-  const handlePrevious = useCallback(() => {
-    if (currentIndex > 0) {
-      setShowAnswer(false); 
-      setCurrentIndex(prevIndex => prevIndex - 1); 
+
+  const handleNextCard = () => {
+    if (currentCardIndex < shuffledWords.length - 1) {
+      setCurrentCardIndex(prevIndex => prevIndex + 1);
+      setShowAnswer(false);
     }
-  }, [currentIndex]);
+  };
 
-  const handleToggleAnswer = useCallback(() => {
-    setShowAnswer(prevShow => !prevShow);
-  }, []);
+  const handlePreviousCard = () => {
+    if (currentCardIndex > 0) {
+      setCurrentCardIndex(prevIndex => prevIndex - 1);
+      setShowAnswer(false);
+    }
+  };
 
-  const handleOpenExplanationModal = useCallback((suffixLabel: string, explanationText: string) => {
-      setExplanationModalContent({
-        title: suffixLabel,
-        text: explanationText
-      });
-      setIsExplanationModalOpen(true);
-  }, []);
+  const handleCardClick = () => {
+    if (shuffledWords.length > 0) {
+      setShowAnswer(prevShow => !prevShow);
+    }
+  };
 
-  const handleCloseExplanationModal = useCallback(() => {
-    setIsExplanationModalOpen(false);
-    setExplanationModalContent(null);
-  }, []);
+  const handleShowExplanation = (suffix: Suffix) => {
+    const detail = SUFFIX_DETAILS_LIST.find(d => d.value === suffix);
+    if (detail) {
+      setModalContent({ title: detail.name, explanation: detail.explanation });
+      setIsModalOpen(true);
+    }
+  };
 
+  const handleSuffixSelection = (suffix: Suffix) => {
+    setSelectedSuffix(suffix);
+    // No need to setLearningMode here if it's already 'suffixes'
+    // or if this function is only called when in 'suffixes' mode.
+    // However, to be safe:
+    if (learningMode !== 'suffixes') {
+      setLearningMode('suffixes');
+    }
+  };
+  
 
-  const currentWordPair = useMemo(() => currentDeck[currentIndex], [currentDeck, currentIndex]);
+  const currentCard = shuffledWords[currentCardIndex];
 
   if (learningMode === 'selection') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-700 flex flex-col items-center justify-center p-4 text-white" role="main">
-        <header className="mb-12 text-center">
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-white shadow-lg rounded-xl p-4 bg-black bg-opacity-20">
-              Euskara Ikasteko Txartelak
-            </h1>
-            <p className="text-lg text-indigo-100 mt-3">Aukeratu zure ikasketa bidea!</p>
-        </header>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-slate-100 flex flex-col items-center justify-center p-4">
+        <h1 className="text-5xl font-bold mb-12 text-center text-indigo-300">Euskara Ikasteko Txartelak</h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
           <button
-            onClick={handleWordModeSelect}
-            className="py-4 px-8 bg-sky-500 text-white font-semibold rounded-lg shadow-xl hover:bg-sky-600 transition-all duration-200 ease-in-out transform hover:scale-105 text-xl focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-opacity-75"
-            aria-label="Hitzak ikasi"
+            onClick={() => setLearningMode('words')}
+            className="p-8 bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-xl text-2xl font-semibold transition-all transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-indigo-400 focus:ring-opacity-50"
           >
-            Hitzak Ikasi
+            Hitz Orokorrak
           </button>
           <button
-            onClick={handleVerbModeSelect}
-            className="py-4 px-8 bg-emerald-500 text-white font-semibold rounded-lg shadow-xl hover:bg-emerald-600 transition-all duration-200 ease-in-out transform hover:scale-105 text-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-75"
-            aria-label="Aditzak ikasi"
+            onClick={() => setLearningMode('verbs')}
+            className="p-8 bg-purple-600 hover:bg-purple-700 rounded-xl shadow-xl text-2xl font-semibold transition-all transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-400 focus:ring-opacity-50"
           >
-            Aditzak Ikasi
+            Aditzak
           </button>
           <button
-            onClick={handleSuffixCategorySelect}
-            className="py-4 px-8 bg-rose-500 text-white font-semibold rounded-lg shadow-xl hover:bg-rose-600 transition-all duration-200 ease-in-out transform hover:scale-105 text-xl focus:outline-none focus:ring-2 focus:ring-rose-400 focus:ring-opacity-75"
-            aria-label="Atzizkiak ikasi"
+            onClick={() => {
+              setLearningMode('suffixes');
+              setSelectedSuffix(SUFFIX_DETAILS_LIST[0]?.value || null); 
+            }}
+            className="p-8 bg-teal-600 hover:bg-teal-700 rounded-xl shadow-xl text-2xl font-semibold transition-all transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-teal-400 focus:ring-opacity-50"
           >
-            Atzizkiak Ikasi
+            Atzizkiak
           </button>
         </div>
-         <footer className="absolute bottom-4 text-center text-slate-400 text-xs">
-          <p>&copy; {new Date().getFullYear()} Euskaraz Ikasteko Tresnak.</p>
-        </footer>
       </div>
     );
   }
 
-  if (learningMode === 'suffixes' && !activeSuffix) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-800 to-slate-600 flex flex-col items-center justify-center p-4 text-white" role="main">
-        <header className="mb-8 text-center">
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-white shadow-lg rounded-xl p-4 bg-black bg-opacity-20">
-              Euskara Ikasteko Txartelak: Atzizkiak
-            </h1>
-            <p className="text-lg text-indigo-100 mt-3">Aukeratu atzizkia</p>
-        </header>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-8">
-          {SUFFIX_DETAILS_LIST.map(btn => (
-            <div key={btn.suffix} className="flex flex-col items-center">
-              <button
-                onClick={() => handleSuffixSelect(btn.suffix)}
-                className={`w-full py-3 px-6 ${btn.color} ${btn.textColor || 'text-white'} font-semibold rounded-lg shadow-xl transition-all duration-200 ease-in-out transform hover:scale-105 text-lg focus:outline-none focus:ring-2 ${btn.color.replace('bg-', 'ring-').replace('hover:', '')} focus:ring-opacity-75`}
-                aria-label={`'${btn.label}' atzizkia hautatu`}
-              >
-                {btn.label}
-              </button>
-            </div>
-          ))}
-        </div>
-        <button
-            onClick={handleBackToMainSelection}
-            className="py-3 px-6 bg-slate-500 text-white font-semibold rounded-lg shadow-md hover:bg-slate-600 transition-colors duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-opacity-75"
-            aria-label="Modu nagusira itzuli"
-          >
-            Modu Nagusira Itzuli
-        </button>
-         <footer className="absolute bottom-4 text-center text-slate-400 text-xs">
-          <p>&copy; {new Date().getFullYear()} Euskaraz Ikasteko Tresnak.</p>
-        </footer>
-        {isExplanationModalOpen && explanationModalContent && (
-          <ExplanationModal
-            isOpen={isExplanationModalOpen}
-            onClose={handleCloseExplanationModal}
-            title={explanationModalContent.title}
-            explanation={explanationModalContent.text}
-          />
-        )}
-      </div>
-    );
-  }
-  
-  if (currentDeck.length === 0 && (learningMode !== 'suffixes' || activeSuffix)) { 
-     let emptyMessage = "Sorta kargatzen...";
-     let backButtonText = "Modu Hautaketara Itzuli";
-     let backButtonAction = handleBackToMainSelection;
-
-    if (learningMode === 'suffixes' && activeSuffix) {
-      emptyMessage = `Ez da aurkitu "${activeSuffixDetails?.label || activeSuffix}" atzizkia duen hitzik.`;
-      backButtonText = "Atzizki Hautaketara Itzuli";
-      backButtonAction = handleBackToSuffixSelection;
-    } else if (learningMode === 'words' || learningMode === 'verbs') {
-        emptyMessage = "Ez da hitzik aurkitu sorta honetan.";
+  const getSubtitle = () => {
+    if (learningMode === 'words') return 'Landu euskal hiztegia!';
+    if (learningMode === 'verbs') return 'Menderatu euskal aditzak!';
+    if (learningMode === 'suffixes' && selectedSuffix) {
+        const suffixName = SUFFIX_DETAILS_LIST.find(s => s.value === selectedSuffix)?.name || selectedSuffix;
+        return `Ikasi "${suffixName}" atzizkiaren erabilera!`;
     }
-
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-700 flex flex-col items-center justify-center p-4 text-white">
-        <h1 className="text-4xl font-bold mb-4">Euskara Ikasteko Txartelak</h1>
-        <p className="text-xl mb-6">{emptyMessage}</p>
-        <button
-            onClick={backButtonAction}
-            className="py-3 px-6 bg-slate-500 text-white font-semibold rounded-lg shadow-md hover:bg-slate-600 transition-colors"
-            aria-label={backButtonText}
-          >
-            {backButtonText}
-          </button>
-      </div>
-    );
-  }
+    return 'Aukeratu ikasteko modua.';
+  };
 
 
-  let modeTitle = '';
-  let modeSubtitle = '';
-  let backButtonLabel = "Modu Nagusira Itzuli";
-  let backButtonAction = handleBackToMainSelection;
-
-
-  if (learningMode === 'words') {
-    modeTitle = 'Hitzak';
-    modeSubtitle = 'Ikasi euskal hitzak erraz!';
-  } else if (learningMode === 'verbs') {
-    modeTitle = 'Aditzak';
-    modeSubtitle = 'Menderatu euskal aditzak!';
-  } else if (learningMode === 'suffixes' && activeSuffix && activeSuffixDetails) {
-    modeTitle = `Atzizkiak: ${activeSuffixDetails.label}`;
-    modeSubtitle = `"${activeSuffixDetails.label}" atzizkia duten hitzak lantzen.`;
-    backButtonLabel = "Atzizki Hautaketara Itzuli";
-    backButtonAction = handleBackToSuffixSelection;
-  }
-  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col items-center justify-center p-4 sm:p-6 md:p-8" role="application">
-      <header className="mb-8 w-full max-w-3xl flex items-center justify-center px-2 sm:px-4">
-        
-        <div className="flex-grow text-center min-w-0">
-          <div className="inline-flex flex-col items-center">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white shadow-lg rounded-xl p-2 sm:p-3 bg-black bg-opacity-20">
-              {modeTitle}
-            </h1>
-             <p className="text-base sm:text-lg text-indigo-100 mt-1 sm:mt-2">{modeSubtitle}</p>
-          
-            {learningMode === 'suffixes' && activeSuffix && activeSuffixDetails && (
-              <div className="mt-2 sm:mt-4">
-                <button
-                  onClick={() => handleOpenExplanationModal(activeSuffixDetails.label, activeSuffixDetails.explanation)}
-                  className="py-1.5 px-3 sm:py-2 sm:px-4 bg-sky-500 text-white font-semibold rounded-lg shadow-md hover:bg-sky-600 transition-all duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-sky-300 focus:ring-opacity-75 inline-flex items-center space-x-2 text-xs sm:text-sm"
-                  aria-label={`${activeSuffixDetails.label} atzizkiaren azalpena ikusi`}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
-                  </svg>
-                  <span className="hidden sm:inline">{activeSuffixDetails.label} - </span>Azalpena
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen text-white flex flex-col items-center p-4">
+      <button
+        onClick={() => setLearningMode('selection')}
+        className="absolute top-6 left-6 py-2 px-4 bg-purple-700 hover:bg-purple-800 text-white font-semibold rounded-lg shadow-md transition-colors duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-75 z-10"
+        aria-label="Modu hautapenera itzuli"
+      >
+        &larr; Itzuli
+      </button>
       
-      <main className="w-full flex flex-col items-center">
-        {currentWordPair ? (
+      <div className="w-full flex-grow flex flex-col items-center justify-center">
+        <div className="my-8 text-center">
+          <div className="inline-block bg-purple-700 text-white px-8 py-4 rounded-xl shadow-lg mb-3">
+            <h1 className="text-4xl md:text-5xl font-bold capitalize">
+              {learningMode === 'words' ? 'Hitz Orokorrak' : learningMode === 'verbs' ? 'Aditzak' : selectedSuffix ? `${SUFFIX_DETAILS_LIST.find(s => s.value === selectedSuffix)?.name || selectedSuffix} Atzizkia` : 'Atzizkiak'}
+            </h1>
+          </div>
+          <p className="text-lg text-purple-200">
+            {getSubtitle()}
+          </p>
+        </div>
+      
+        {learningMode === 'suffixes' && (
+          <div className="mb-6 max-w-md w-full">
+            <label htmlFor="suffix-select" className="block text-sm font-medium text-purple-200 mb-1">
+              Aukeratu atzizki bat:
+            </label>
+            <div className="flex items-center space-x-2">
+              <select
+                id="suffix-select"
+                value={selectedSuffix || ''}
+                onChange={(e) => handleSuffixSelection(e.target.value as Suffix)}
+                className="block w-full pl-3 pr-10 py-2 text-base border-purple-500 bg-purple-700 text-white focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm rounded-md"
+              >
+                <option value="" disabled>-- Hautatu --</option>
+                {SUFFIX_DETAILS_LIST.map(suffixDetail => (
+                  <option key={suffixDetail.value} value={suffixDetail.value || ''}>
+                    {suffixDetail.name}
+                  </option>
+                ))}
+              </select>
+              {selectedSuffix && SUFFIX_DETAILS_LIST.find(s => s.value === selectedSuffix)?.explanation && (
+                <button
+                  onClick={() => handleShowExplanation(selectedSuffix)}
+                  className="p-2 bg-pink-600 hover:bg-pink-700 rounded-md text-sm text-white focus:outline-none focus:ring-2 focus:ring-pink-500"
+                  aria-label={`${selectedSuffix} atzizkiaren azalpena erakutsi`}
+                >
+                  Azalpena
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
+        {shuffledWords.length > 0 && currentCard ? (
           <Flashcard
-            key={currentWordPair.id} 
-            wordPair={currentWordPair} 
+            wordPair={currentCard}
             showAnswer={showAnswer}
-            onCardClick={handleToggleAnswer} 
+            onCardClick={handleCardClick}
           />
         ) : (
-          <div className="bg-white shadow-2xl rounded-xl p-6 md:p-10 w-full max-w-lg min-h-[300px] flex flex-col items-center justify-center">
-            <p className="text-xl text-slate-700">Sorta amaitu da. Bikain!</p>
+          <div className="bg-white shadow-2xl rounded-xl p-10 w-full max-w-lg min-h-[300px] flex flex-col items-center justify-center text-slate-700">
+            <p className="text-xl">
+              {learningMode === 'suffixes' && !selectedSuffix 
+                  ? "Hautatu atzizki bat txartelak ikusteko."
+                  : learningMode === 'suffixes' && currentWordList.length === 0
+                  ? `Ez da aurkitu '${SUFFIX_DETAILS_LIST.find(s => s.value === selectedSuffix)?.name || selectedSuffix}' atzizkia duen hitzik.`
+                  : "Ez dago hitzik erakusteko modu honetan."
+              }
+            </p>
           </div>
         )}
-        {currentDeck.length > 0 && ( 
-            <Controls
-              onPrevious={handlePrevious}
-              onNext={handleNext}
-              canPrevious={currentIndex > 0}
-              canNext={currentIndex < currentDeck.length - 1}
-              currentCardNumber={currentDeck.length > 0 ? currentIndex + 1 : 0}
-              totalCards={currentDeck.length}
-            />
-        )}
-         {(learningMode === 'words' || learningMode === 'verbs' || (learningMode === 'suffixes' && activeSuffix)) && (
-            <button
-                onClick={backButtonAction}
-                className="mt-6 py-3 px-8 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-slate-800 transition-colors duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-75"
-                aria-label={backButtonLabel}
-            >
-                {backButtonLabel}
-            </button>
-        )}
-      </main>
 
-      <footer className="mt-12 text-center text-indigo-200 text-sm">
-        <p>&copy; {new Date().getFullYear()} Euskaraz Ikasteko Tresnak. Ikasketa on!</p>
-      </footer>
-      {isExplanationModalOpen && explanationModalContent && (
-          <ExplanationModal
-            isOpen={isExplanationModalOpen}
-            onClose={handleCloseExplanationModal}
-            title={explanationModalContent.title}
-            explanation={explanationModalContent.text}
+        {shuffledWords.length > 0 && (
+          <Controls
+            onPrevious={handlePreviousCard}
+            onNext={handleNextCard}
+            canPrevious={currentCardIndex > 0}
+            canNext={currentCardIndex < shuffledWords.length - 1}
+            currentCardNumber={currentCardIndex + 1}
+            totalCards={shuffledWords.length}
           />
         )}
+      </div>
+
+      <footer className="text-center py-4 mt-auto w-full">
+        <p className="text-sm text-purple-200">
+          © 2025 Euskaraz Ikasteko Tresnak. Ikasketa on!
+        </p>
+      </footer>
+
+      <ExplanationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title={modalContent.title}
+        explanation={modalContent.explanation}
+      />
     </div>
   );
 };

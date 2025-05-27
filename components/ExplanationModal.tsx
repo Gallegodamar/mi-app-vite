@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 
 interface ExplanationModalProps {
@@ -26,7 +27,6 @@ const ExplanationModal: React.FC<ExplanationModalProps> = ({ isOpen, onClose, ti
     if (isOpen) {
       document.addEventListener('keydown', handleEscapeKey);
       document.addEventListener('mousedown', handleClickOutside);
-      // Focus management for accessibility
       const focusableElements = modalRef.current?.querySelectorAll(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       );
@@ -44,26 +44,21 @@ const ExplanationModal: React.FC<ExplanationModalProps> = ({ isOpen, onClose, ti
     return null;
   }
 
-  // Basic styling for bold and italic based on markdown-like syntax
   const formatText = (text: string) => {
     return text
       .split('\n')
       .map((line, index) => {
-        // Replace **text** with <strong>text</strong>
         line = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        // Replace *text* with <em>text</em>
         line = line.replace(/\*(.*?)\*/g, '<em>$1</em>');
-        // Replace list items • or *
         if (line.trim().startsWith('•') || line.trim().startsWith(' •')) {
             return <li key={index} className="ml-4 list-disc" dangerouslySetInnerHTML={{ __html: line.trim().substring(1).trim() }} />;
         }
-        if (line.trim().startsWith('* ') && !line.includes('<em>') && !line.includes('<strong>')) { // Avoid conflict with italic/bold
+        if (line.trim().startsWith('* ') && !line.includes('<em>') && !line.includes('<strong>')) {
              return <li key={index} className="ml-4 list-disc" dangerouslySetInnerHTML={{ __html: line.trim().substring(1).trim() }} />;
         }
         return <p key={index} className="mb-2" dangerouslySetInnerHTML={{ __html: line }} />;
       });
   };
-
 
   return (
     <div 
@@ -77,7 +72,7 @@ const ExplanationModal: React.FC<ExplanationModalProps> = ({ isOpen, onClose, ti
         className="bg-slate-800 p-6 rounded-lg shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto text-slate-100"
       >
         <div className="flex justify-between items-center mb-4">
-          <h2 id="explanation-modal-title" className="text-2xl font-bold text-indigo-300">{title}</h2>
+          <h2 id="explanation-modal-title" className="text-2xl font-bold text-purple-300">{title}</h2>
           <button
             onClick={onClose}
             className="text-slate-400 hover:text-slate-200 text-2xl"
@@ -91,7 +86,7 @@ const ExplanationModal: React.FC<ExplanationModalProps> = ({ isOpen, onClose, ti
         </div>
         <button
           onClick={onClose}
-          className="mt-6 py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition-colors duration-150 ease-in-out w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-75"
+          className="mt-6 py-2 px-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow-md transition-colors duration-150 ease-in-out w-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-75"
         >
           Ulertuta
         </button>

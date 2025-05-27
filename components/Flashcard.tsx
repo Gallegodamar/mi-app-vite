@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { WordPair } from '../types';
 
@@ -19,13 +20,13 @@ const Flashcard: React.FC<FlashcardProps> = ({ wordPair, showAnswer, onCardClick
       aria-label={showAnswer ? `Ocultar respuesta para ${wordPair.basque}` : `Mostrar respuesta para ${wordPair.basque}`}
     >
       <div className="text-center w-full">
-        <h2 className="text-3xl md:text-4xl font-bold text-indigo-700 mb-6 break-words">
+        <h2 className="text-3xl md:text-4xl font-bold text-purple-700 mb-6 break-words">
           {wordPair.basque}
         </h2>
         <div
           className={`
-            border-t-2 border-indigo-200
-            transform transition-all duration-300 ease-in-out origin-top overflow-hidden
+            border-t-2 border-purple-300
+            transform origin-top overflow-hidden
             ${showAnswer
               ? 'opacity-100 scale-100 max-h-[500px] mt-6 pt-6'
               : 'opacity-0 scale-95 max-h-0 mt-0 pt-0'
@@ -33,7 +34,7 @@ const Flashcard: React.FC<FlashcardProps> = ({ wordPair, showAnswer, onCardClick
           `}
         >
           {wordPair.spanish && (
-            <p className="text-xl md:text-2xl text-slate-700 whitespace-pre-line break-words">
+            <p className="text-xl md:text-2xl text-gray-700 whitespace-pre-line break-words">
               {wordPair.spanish}
             </p>
           )}
